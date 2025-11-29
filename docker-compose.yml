@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  flask_backend:
+    build: ./app
+    container_name: frontend
+    ports:
+      - "5000:5000"
+
+  nginx:
+    build: ./nginx
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - flask_backend
+
