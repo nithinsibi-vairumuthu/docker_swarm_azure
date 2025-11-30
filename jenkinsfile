@@ -8,7 +8,7 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
+        stage('Clone  Repository') {
             steps {
                 git 'https://github.com/nithinsibi-vairumuthu/docker_swarm_azure'
             }
