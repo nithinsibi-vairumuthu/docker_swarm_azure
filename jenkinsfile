@@ -10,7 +10,7 @@ pipeline {
 
         stage('Clone  Repository') {
             steps {
-                git 'https://github.com/nithinsibi-vairumuthu/docker_swarm_azure'
+                git branch: 'main', url: 'https://github.com/nithinsibi-vairumuthu/docker_swarm_azure'
             }
         }
 
