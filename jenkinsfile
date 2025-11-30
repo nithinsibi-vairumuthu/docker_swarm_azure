@@ -8,7 +8,7 @@ pipeline {
 
     stages {
 
-        stage('Clone  Repository') {
+        stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/nithinsibi-vairumuthu/docker_swarm_azure'
             }
@@ -31,8 +31,10 @@ pipeline {
         stage('Docker Login') {
             steps {
                 withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'DOCKER_TOKEN')]) {
-                  sh '''
-                    echo $DOCKER_TOKEN | docker login -u nithinsibi --password-stdin
+                    sh '''
+                        echo $DOCKER_TOKEN | docker login -u nithinsibi --password-stdin
+                    '''
+                }
             }
         }
 
@@ -50,4 +52,3 @@ pipeline {
         }
     }
 }
-
