@@ -38,7 +38,7 @@ pipeline {
 
         stage('Push Images') {
             steps {
-                sh 'docker push $DOCKERHUB_USER/flask-backend:latest'
+                sh 'docker push $DOCKERHUB_USER/flask_backend:latest'
                 sh 'docker push $DOCKERHUB_USER/nginx-proxy:latest'
             }
         }
