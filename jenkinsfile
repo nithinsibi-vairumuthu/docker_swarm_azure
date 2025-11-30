@@ -23,7 +23,7 @@ pipeline {
 
         stage('Tag Images') {
             steps {
-                sh 'docker tag flask-backend:latest $DOCKERHUB_USER/flask-backend:latest'
+                sh 'docker tag flask_backend:latest $DOCKERHUB_USER/flask_backend:latest'
                 sh 'docker tag nginx-proxy:latest $DOCKERHUB_USER/nginx-proxy:latest'
             }
         }
