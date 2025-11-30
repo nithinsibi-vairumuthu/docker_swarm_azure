@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_USER = "nithinsibi"
+        DOCKERHUB_PASS = credentials('dockerhub-pass')
+    }
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/nithinsibi-vairumuthu/docker_swarm_azure'
+            }
+        }
+
+        stage('Build Images') {
+            steps {
+                sh 'docker build -t flask_backend:latest ./app'
+                sh 'docker build -t nginx-proxy:latest ./nginx'
+            }
+        }
+
+        stage('Tag Images') {
+            steps {
+                sh 'docker tag flask-backend:latest $DOCKERHUB_USER/flask-backend:latest'
+                sh 'docker tag nginx-proxy:latest $DOCKERHUB_USER/nginx-proxy:latest'
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                sh 'docker push $DOCKERHUB_USER/flask-backend:latest'
+                sh 'docker push $DOCKERHUB_USER/nginx-proxy:latest'
+            }
+        }
+
+        stage('Deploy to Swarm') {
+            steps {
+                sh 'docker stack deploy -c docker-stack.yml webapp'
+            }
+        }
+    }
+}
+
